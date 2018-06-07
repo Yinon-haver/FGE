@@ -114,46 +114,84 @@ public class Main {
 
         public static void main(String[] args) {
 
-            int operation = Menu();
+            String sentence = "hi,how are,you";
+            String [] splitArr = split(sentence, ',');
+            for (int i = 0; i < splitArr.length ; i++) {
+                System.out.println(splitArr[i]);
+            }
+        //    System.out.println(removeSpacesAndComma("hi   ,how            are,you",' ',','));
 
-            while(operation!= 5){
+//            int operation = Menu();
+//
+//            while(operation!= 5){
+//
+//                switch (operation){
+//                    case 1 : AddNewEmployee() ;
+//                        break;
+//                    case 2: PrintAllEmployees();
+//                        break;
+//                    case 3 : PrintGivenEmployee();
+//                        break;
+//                    case 4 : MaxBigestSalary();
+//                        break;
+//                    default: System.out.println("Thanks ' have a Great day");
+//                }
+//                operation= Menu();
+//            }
 
-                switch (operation){
-                    case 1 : AddNewEmployee() ;
-                        break;
-                    case 2: PrintAllEmployees();
-                        break;
-                    case 3 : PrintGivenEmployee();
-                        break;
-                    case 4 : MaxBigestSalary();
-                        break;
-                    default: System.out.println("Thanks ' have a Great day");
-                }
-                operation= Menu();
+
+
+
+        }
+
+    public static String[] split(String sentence , char c) {
+        int length = 0 ;
+
+        for (int i = 0; i <sentence.length() ; i++) {
+            if (sentence.charAt(i ) == ' ' ||sentence.charAt(i ) ==',' ){
+                length++;
+            }
+        }
+        length++;
+        String [] ans = new String[length];
+        int indexArry = 0;
+        int indexAns = 0;
+
+        while (indexArry < sentence.length()) {
+            String temp = "";
+
+            while ((indexArry < sentence.length() ) && (sentence.charAt(indexArry) != c ) &&  (sentence.charAt(indexArry)!=' ' )  ) {
+                temp+=sentence.charAt(indexArry++);
+            }
+            ans[indexAns++]=temp;
+            indexArry++;
+        }
+        return ans;
+    }
+
+
+
+    public static String removeSpacesAndComma(String str , char c , char z) {
+        char[] charArray = str.toCharArray();
+
+        int numSpaces = 0; // number of spaces before 'i'th character
+        for (int i = 0; i < charArray.length; i++) {
+            // count number of spaces
+            if (charArray[i] == c ||charArray[i] == z ) {
+                numSpaces++;
+            }
+            // put 'i'th character into its correct position after removing spaces before it
+            else {
+                charArray[i-numSpaces] = charArray[i];
             }
         }
 
+        // all the spaces are moved towards the end of the string.
+        // Create new string by using non-space characters
+        charArray = Arrays.copyOf(charArray, charArray.length - numSpaces);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        return new String(charArray);
+    }
 
 
     // Prints diamond pattern with 2n rows
@@ -398,31 +436,6 @@ public class Main {
         return new String(charArray);
     }
 
-    public static String removeSpaces(String str  , char c) {
-        char[] charArray = str.toCharArray();
-
-        int numSpaces = 0; // number of spaces before 'i'th character
-        for (int i = 0; i < charArray.length; i++)
-        {
-            // count number of spaces
-            if (charArray[i] == c)
-            {
-                numSpaces++;
-            }
-            // put 'i'th character into its correct position after removing spaces before it
-            else
-            {
-                charArray[i-numSpaces] = charArray[i];
-            }
-        }
-
-        // all the spaces are moved towards the end of the string.
-        // Create new string by using non-space characters
-        charArray = Arrays.copyOf(charArray, charArray.length - numSpaces);
-
-        return new String(charArray);
-    }
-
     public static boolean solution(int[] nums, int target) {
         if(nums.length == 0) {
             return target == 0;
@@ -487,11 +500,21 @@ public class Main {
         }
     }
 
-    public class Node{
+    public static class Node{
         public Node left;
         public Node right;
         public String val;
         Node [] Neighbours;
+
+        public Node(Node left, Node right, String val, Node[] neighbours) {
+            this.left = left;
+            this.right = right;
+            this.val = val;
+            Neighbours = neighbours;
+        }
+
+        public Node() {
+        }
 
         public Node getLeft() {
             return left;
